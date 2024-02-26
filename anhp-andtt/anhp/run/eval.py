@@ -25,7 +25,6 @@ from utils.log import LogReader, LogWriter
 from evalu.sigtest import Bootstrapping
 
 import argparse
-__author__ = 'Hongyuan Mei'
 
 
 class Eval(object):
