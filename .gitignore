@@ -26,3 +26,4 @@ plot_code.__pycache__
 *.pdf
 *.png
 *.svg
+*.txt
