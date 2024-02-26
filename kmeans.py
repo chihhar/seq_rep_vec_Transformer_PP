@@ -7,6 +7,7 @@ def Set_data_kmeans( input, n_clusters):
     target_data = []
     #input [[~B,L],[1B~2B,L],[~N,L]] :input_time
     #      [[~B,x,y],
+    
     for batch in input:
         if len(batch)==2:
             batch=batch[0]
