@@ -27,5 +27,6 @@ plot_code.py
 *.png
 *.svg
 *.txt
+!requirements.txt
 *.pkl
 anhp-andtt/

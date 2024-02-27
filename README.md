@@ -10,13 +10,13 @@ This repository provides data and codes used in the paper <em>A novel Transforme
 To get started with the project, follow these steps:
 1. Clone the repository.
    ```
-    $ git clone 
+    $ git clone https://github.com/chihhar/seq_rep_vec_Transformer_PP.git
     ```
 2.  Install the required packages from the requirements.txt file using conda:
    ```
-   $ pip install
+   $ pip install 
    ```
-3. Download a zip file for each dataset, i.e., MNIST and shift15m, from Google Drive and place unzipped files to the corresponding pickle_data folder under each dataset folder as the following structure.
+3. Download a zip file for each dataset, i.e., NCEDC and SF Police Call, from [Google Drive](https://drive.google.com/drive/folders/1bDROZjdKLxUslbnUY7q0JbxQZhG-KSin?usp=drive_link) and place unzipped files to the corresponding data folder under each dataset folder as the following structure.
 
 4. Execute Main.py of each dataset to train and evaluate models as follows:
 ```

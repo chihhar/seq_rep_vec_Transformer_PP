@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Contents</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <p>This repository provides data and codes used in the paper <em>A novel Transformer-based fully trainable point process</em> to Neuralcomputation.</p>
+<h1 id="contents">Contents</h1>
+<ol>
+<li>Instlation</li>
+<li>Structure of folders and files</li>
+<li>Citation</li>
+</ol>
+<h1 id="requirement">Requirement</h1>
+<ul>
+<li>Python 3.7.13</li>
+<li>Pytorch 1.11.0</li>
+</ul>
+<h1 id="installation">Installation</h1>
+<p>To get started with the project, follow these steps:</p>
+<ol>
+<li>Clone the repository.<pre><code> $ git clone 
+</code></pre>
+</li>
+<li>Install the required packages from the requirements.txt file using conda:</li>
+</ol>
+<pre><code>$ pip install
+</code></pre>
+<ol start="3">
+<li>
+<p>Download a zip file for each dataset, i.e., NCEDC and SF Police Call, from <a href="https://drive.google.com/drive/folders/1bDROZjdKLxUslbnUY7q0JbxQZhG-KSin?usp=drive_link">Google Drive</a> and place unzipped files to the corresponding data folder under each dataset folder as the following structure.</p>
+</li>
+<li>
+<p>Execute <a href="http://Main.py">Main.py</a> of each dataset to train and evaluate models as follows:</p>
+</li>
+</ol>
+<pre><code>    (training):$ python Main.py [--train ] [-gene]
+    (evaluation):$ python Main.py [-gene]
+</code></pre>
+<p>Option:</p>
+<ul>
+<li>train : trainmode, default=False</li>
+<li>gene
+<ul>
+<li>string: データセットの種類, default=h1 (hawkes1),
+<ul>
+<li>hawkes1 : h1</li>
+<li>hawkes2 : h_fix05</li>
+<li>seismic datasets (NCEDC) : jisin</li>
+<li>SF police call datasets : 911_x_Address</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>imp
+<ul>
+<li>string :</li>
+</ul>
+</li>
+</ul>
+<h1 id="structure-of-folders-and-files">Structure of folders and files</h1>
+<pre><code>.
+├── Main.py
+├── README.md
+├── Utils.py
+├── anhp-andtt
+├── checkpoint
+├── data
+│   ├── Address
+│   ├── call1
+│   ├── call2
+│   ├── call3
+│   ├── data_selector.py
+│   ├── date_jisin.90016
+│   ├── date_pickled.py
+│   ├── h1
+│   └── h_fix05
+├── kmeans.py
+├── log
+├── mse_all_ttest.py
+├── pickled
+├── related_works
+│   ├── FT_PP
+│   └── THP
+├── ronbun_plot_code.py
+└── transformer
+    ├── Constants.py
+    ├── Layers.py
+    ├── Models.py
+    ├── Modules.py
+    ├── SubLayers.py
+    └── __pycache__
+</code></pre>
+<h1 id="citation">Citation</h1>
+<h1 id="データファイル">データファイル</h1>
+<pre><code>提案法フォルダ: /data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process
+THPフォルダ: /data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/related_works/THP
+FT-PPフォルダ: /data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/related_works/FT_PP
+
+カリフォルニア地震：
+    &quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/date_jisin.90016&quot;
+
+Emergency Call All:
+    train:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_All100_sliding_train.pkl&quot;
+    valid:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_All100_sliding_valid.pkl&quot;
+    test:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_All100_sliding_test.pkl&quot;
+Emergency Call 1:
+    train:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_1_freq_sliding_train.pkl&quot;
+    valid:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_1_freq_sliding_valid.pkl&quot;
+    test:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_1_freq_sliding_test.pkl&quot;
+Emergency Call 50:
+    train:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_50_freq_sliding_train.pkl&quot;
+    valid:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_50_freq_sliding_valid.pkl&quot;
+    test:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_50_freq_sliding_test.pkl&quot;
+Emergency Call 100:
+    train_data:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_100_freq_sliding_train.pkl&quot;
+    valid:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_100_freq_sliding_valid.pkl&quot;
+    test:&quot;/data1/nishizawa/Desktop/Transtrans/Transformer-Hawkes-Process/data/Call_100_freq_sliding_test.pkl&quot;
+</code></pre>
+<p>#############################</p>
+<h1 id="提案法">提案法</h1>
+<h3 id="option">Option:</h3>
+<pre><code>-gene: データの種類 ex.&quot;h1&quot;,&quot;jisin&quot;,&quot;911&quot;
+--pre_attn: PreAttention
+--phase: Phase分け学習
+--grad_log: 勾配logの保存
+
+-trainvec_num: 系列代表ベクトルの個数 
+-pooling_k: anchorベクトルの個数 
+
+-d_model: 時間エンコーディング次元
+-d_k: Key次元
+-d_v: Value次元
+-n_head: Attentionヘッド数
+-d_inner_hid: Attention後のFN層の次元
+-n_layers: Attentionの繰り返し
+-linear_num: 非線形変換の繰り返し
+
+-loss_scale: MAEとloglikelihood比率
+-device_num: デバイス番号
+
+-imp: メモ
+</code></pre>
+<h3 id="hawkes過程">Hawkes過程:</h3>
+<pre><code>学習あり:
+    python Main.py -gene=h1 --pre_attn --phase --train
+テスト:
+    python Main.py -gene=h1 --pre_attn --phase
+</code></pre>
+<h3 id="カリフォルニア地震">カリフォルニア地震:</h3>
+<pre><code>学習:
+    python Main.py --pre_attn -gene=jisin --phase --train
+テスト:
+    python Main.py --pre_attn -gene=jisin --phase
+</code></pre>
+<h3 id="emergency-call">Emergency Call:</h3>
+<pre><code>#100住所すべて
+学習:
+    python Main.py --pre_attn -gene=911_All --phase --train
+テスト:
+    python Main.py --pre_attn -gene=911_All --phase
+
+#最大の頻度
+学習:
+    python Main.py --pre_attn -gene=911_1 --phase --train
+テスト:
+    python Main.py --pre_attn -gene=911_1 --phase
+    
+#50番目の頻度
+学習:
+    python Main.py --pre_attn -gene=911_50 --phase --train
+テスト:
+    python Main.py --pre_attn -gene=911_50 --phase
+
+#100番目の頻度
+学習:
+    python Main.py --pre_attn -gene=911_100 --phase --train
+テスト:
+    python Main.py --pre_attn -gene=911_100 --phase
+</code></pre>
+<p>######################################
+######################################</p>
+<h1 id="thp">THP</h1>
+<h3 id="hawkes過程-1">Hawkes過程</h3>
+<pre><code>学習:
+    python THP.py -gene=h1 --pre_attn --train
+テスト:
+    python THP.py -gene=h1 --pre_attn
+</code></pre>
+<h3 id="カリフォルニア地震-1">カリフォルニア地震</h3>
+<pre><code>学習:
+    python THP.py -gene=jisin --pre_attn --train
+テスト:
+    python THP.py -gene=jisin --pre_attn
+</code></pre>
+<h3 id="911_all">911_All</h3>
+<pre><code>学習:
+    python THP.py -gene=911_All --pre_attn --train
+テスト:
+    python THP.py -gene=911_All --pre_attn
+</code></pre>
+<h3 id="911_1">911_1</h3>
+<pre><code>学習:
+    python THP.py -gene=911_1 --pre_attn --train
+テスト:
+    python THP.py -gene=911_1 --pre_attn
+</code></pre>
+<h3 id="911_50">911_50</h3>
+<pre><code>学習:
+    python THP.py -gene=911_50 --pre_attn --train
+テスト:
+    python THP.py -gene=911_50 --pre_attn
+</code></pre>
+<h3 id="911_100">911_100</h3>
+<pre><code>学習:
+    python THP.py -gene=911_100 --pre_attn --train
+テスト:
+    python THP.py -gene=911_100 --pre_attn
+</code></pre>
+<p>#############################<br>
+#############################</p>
+<h1 id="ft-pp">FT-PP</h1>
+<h4 id="option-1">Option</h4>
+<pre><code>-model:ハザード関数モデルの変更
+        ex:-model={'const','exp','pc',default='omi',}
+</code></pre>
+<h3 id="hawkes過程-2">Hawkes過程</h3>
+<pre><code>学習:
+    python omi.py -gene=h1 --train=True -model=omi
+テスト:
+    python omi.py -gene=h1 --train=False -model=omi
+</code></pre>
+<h3 id="カリフォルニア地震-2">カリフォルニア地震</h3>
+<pre><code>学習:
+    python omi.py -gene=jisin --train=True -model=omi
+テスト:
+    python omi.py -gene=jisin --train=False -model=omi
+</code></pre>
+<h3 id="911_all-1">911_All</h3>
+<pre><code>学習:
+    python omi.py -gene=911_All --train=True -model=omi
+テスト:
+    python omi.py -gene=911_All --train=False -model=omi
+</code></pre>
+<h3 id="911_1-1">911_1</h3>
+<pre><code>学習:
+    python omi.py -gene=911_1 --train=True -model=omi
+テスト:
+    python omi.py -gene=911_1 --train=False -model=omi
+</code></pre>
+<h3 id="911_50-1">911_50</h3>
+<pre><code>学習:
+    python omi.py -gene=911_50 --train=True -model=omi
+テスト:
+    python omi.py -gene=911_50 --train=False -model=omi
+</code></pre>
+<h3 id="911_100-1">911_100</h3>
+<pre><code>学習:
+    python omi.py -gene=911_100 --train=True -model=omi
+テスト:
+    python omi.py -gene=911_100 --train=False -model=omi
+</code></pre>
+<p>#############################</p>
+<h1 id="ファイル概要">ファイル概要</h1>
+<pre><code>Main.py:
+    訓練やテストの実行
+
+Transformer/Model.py:
+    class Transformer:
+        モデルの定義
+Transformer/Layers.py:
+    EncoderやDecoderLayerの定義
+Transformer/SubLayers.py:
+    SelfAttention,MultiHeadAttentionの定義
+Transformer/Modules.py:
+    Attentionの処理
+
+Utils.py:
+    def log_likelihood:
+        対数尤度の計算
+    def compute_integral_unbiased: 
+        モンテカルロ積分
+    def time_loss_ae:
+        予測値の絶対誤差の計算
+</code></pre>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
