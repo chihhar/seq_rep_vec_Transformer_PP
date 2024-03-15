@@ -11,7 +11,7 @@ import transformer.Constants as Constants
 from transformer.Layers import EncoderLayer
 from transformer.Layers import DecoderLayer
 from matplotlib import pyplot as plt
-
+dir_folder=os.getcwd()
 def get_non_pad_mask(seq):
     """ Get the non-padding positions. """
     assert seq.dim() == 2
@@ -73,7 +73,7 @@ class Encoder(nn.Module):
         after_result[:, :, 1::2] = torch.cos(result[:, :,1::2])
         return after_result.to(result.device)
 
-    def forward(self, event_time, rep_Mat=None,non_pad_mask=None):
+    def forward(self, event_time, rep_Mat=None,non_pad_mask=None, plot=False):
         """ Encode event sequences via masked self-attention. """
         #入力の時間エンコーディング
         tem_enc = self.temporal_enc(event_time)
@@ -91,12 +91,45 @@ class Encoder(nn.Module):
             slf_attn_mask = None
 
         enc_output = torch.zeros(tem_enc.shape,device=self.device)
+        if plot==True:
+            initial_S=tem_enc[0,-3:-2,:]
+            initial_S=torch.cat((initial_S,tem_enc[0,-2:-1,:]),dim=0)
+            initial_S=torch.cat((initial_S,tem_enc[0,-1:,:]),dim=0)#initial
+            H0=tem_enc[0,:,:]#initial
+            #内積と履歴イベント番号
+            for_i=0
+        
         for enc_layer in self.layer_stack:
             enc_output += tem_enc
             enc_output, _ = enc_layer(
                 enc_input=enc_output,
                 non_pad_mask=non_pad_mask,
                 slf_attn_mask=slf_attn_mask)
+            if plot==True:
+                layer_S=enc_output[0,-3:-2,:]
+                layer_S=torch.cat((layer_S,enc_output[0,-2:-1,:]),dim=0)
+                layer_S=torch.cat((layer_S,enc_output[0,-1:,:]),dim=0)
+                
+                layer_H=enc_output[0,:,:]
+                if for_i==0:
+                    lS=layer_S.unsqueeze(0)
+                    lH=layer_H.unsqueeze(0)
+                else:
+                    lS=torch.cat((lS,layer_S.unsqueeze(0)),dim=0)
+                    lH=torch.cat((lH,layer_H.unsqueeze(0)),dim=0)
+                for_i+=1
+        
+        if plot==True:
+            file_path=f"{dir_folder}/pickled/proposed/h_fix05"
+            with open(f"{file_path}/proposed__fix05_naiseki_lS", 'wb') as file:
+                pickle.dump(lS , file)
+            with open(f"{file_path}/proposed__h_fix05_naiseki_lH", 'wb') as file:
+                pickle.dump(lH , file)
+            with open(f"{file_path}/proposed__h_fix05_naiseki_initial_S", 'wb') as file:
+                pickle.dump(initial_S , file)
+            with open(f"{file_path}/proposed__h_fix05_naiseki_H0", 'wb') as file:
+                pickle.dump(H0 , file)
+            return 1
         
         if self.normalize_before==True:
             enc_output = self.layer_norm(enc_output)
@@ -153,7 +186,7 @@ class Decoder(nn.Module):
         after_result[:,:, 0::2] = torch.sin(result[:, :,0::2])
         after_result[:, :, 1::2] = torch.cos(result[:, :,1::2])
         return after_result.to(result.device)
-    def forward(self, input,k,v,temp_enc=True):
+    def forward(self, input,k,v,temp_enc=True,plot=False):
         #x:temp_enb(B,L,M)
         """ Encode event sequences via masked self-attention. """
         # prepare attention masks
@@ -194,46 +227,22 @@ class Decoder(nn.Module):
                     v,
                     non_pad_mask=None,
                     slf_attn_mask=None)
-                
-            #     tmp_A=output[0,-3:-2,:]
-            #     tmp_A=torch.cat((tmp_A,output[0,-2:-1,:]),dim=0)
-            #     tmp_A=torch.cat((tmp_A,output[0,-1:,:]),dim=0)
-            #     if for_i==0:
-            #         output_A=tmp_A.unsqueeze(0)
-            #     else:
-            #         output_A=torch.cat((output_A,tmp_A.unsqueeze(0)),dim=0)
-            #     for_i+=1
-            # anc_num=input.shape[1]
-            # rep_num=k.shape[1]
-            # l_num=len(self.layer_stack)
-            # x_val=np.array([1,2,3])
-            # color_len=["m","b","g","r"]
-            # patterns = [ "/" , "\\" , "|" , "-" , "+" , "x", "o", "O", ".", "*" ]
-            # for loop_anc_num in range(anc_num):
-            #     plt.clf()
-            #     plt.figure(figsize=(8,5))
-            #     plt.ylim(0,1.0)
-            #     plt.xlabel(f"seq-rep vector index",fontsize=18)
-            #     plt.ylabel(f"similarity",fontsize=18)
-            #     temp_sim=torch.cosine_similarity(S1,initial_A[loop_anc_num,:])
-            #     plt.bar(x_val-0.2,torch.softmax(temp_sim,dim=0).cpu().detach(),width=0.1,label=f"initial",color="k")
-            #     for loop_layer_num in range(l_num):
-            #         temp_sim=torch.cosine_similarity(S1,output_A[loop_layer_num,loop_anc_num,:])
-            #         plt.bar(x_val-0.1+loop_layer_num*0.1,torch.softmax(temp_sim,dim=0).cpu().detach(),width=0.1,label=f"layer{loop_layer_num+1}",color=color_len[loop_layer_num],hatch=patterns[loop_layer_num])
-            #     plt.xticks(x_val,["1","2","3"],fontsize=18)
-            #     plt.yticks(fontsize=18)
-            #     if loop_anc_num==0:
-            #         plt.legend(fontsize=18, loc='upper right')
-            #     plt.savefig(f"plot/ronb/poiA{loop_anc_num+1}naiseki_histID.pdf", bbox_inches='tight', pad_inches=0)
-            #     plt.savefig(f"plot/ronb/poiA{loop_anc_num+1}naiseki_histID.svg", bbox_inches='tight', pad_inches=0)
-            # import pickle
-            # with open(f"pickled/proposed/h_fix05/anc/h_fix05proposed_initial.pkl", "wb") as file:
-            #     pickle.dump(initial_A,file)
-            # with open(f"pickled/proposed/h_fix05/anc/h_fix05proposed_S1.pkl", 'wb') as file:
-            #     pickle.dump(S1 , file)
-            # with open(f"pickled/proposed/h_fix05/anc/h_fix05proposed_output_A","wb") as file:
-            #     pickle.dump(output_A,file)
-            # pdb.set_trace()
+            if plot==True:
+                tmp_A=output[0,-3:-2,:]
+                tmp_A=torch.cat((tmp_A,output[0,-2:-1,:]),dim=0)
+                tmp_A=torch.cat((tmp_A,output[0,-1:,:]),dim=0)
+                if for_i==0:
+                    output_A=tmp_A.unsqueeze(0)
+                else:
+                    output_A=torch.cat((output_A,tmp_A.unsqueeze(0)),dim=0)
+                import pickle
+                with open(f"pickled/proposed/h_fix05/anc/h_fix05proposed_initial.pkl", "wb") as file:
+                    pickle.dump(initial_A,file)
+                with open(f"pickled/proposed/h_fix05/anc/h_fix05proposed_S1.pkl", 'wb') as file:
+                    pickle.dump(S1 , file)
+                with open(f"pickled/proposed/h_fix05/anc/h_fix05proposed_output_A","wb") as file:
+                    pickle.dump(output_A,file)
+                return 1
         return output
 
 
