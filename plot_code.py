@@ -463,16 +463,20 @@ def main():
     
     # update fig.4 result
     phase_eventGT_prediction_plot(model, testloader,opt)
+    
     # update fig.5 result
-    rep_attention(model, testloader, opt)
+    if opt.gene=="h_fix05":
+        rep_attention(model, testloader, opt)
+    
     # update fig.6 result
-    anc_attention(model, testloader, opt)
+    if opt.gene=="h_fix05":
+        anc_attention(model, testloader, opt)
     
     # update fig.7 result
     t_SNE(model, testloader,opt)
     
+    # update fig.8 result
     if opt.gene=="h_fix05":
-        # update fig.8 result
         save_intensity_result(model, testloader, opt)
 
 if __name__=="__main__":
