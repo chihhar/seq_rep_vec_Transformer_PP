@@ -371,8 +371,9 @@ def main():#python Main.py --train -gene="jisin"
                 f"pickled/GT/{opt.gene}/",
                 f"plot/loss_lc/{opt.imp}/",
                 f"plot/event_GT/{opt.gene}/{opt.trainvec_num}_{opt.pooling_k}/"
-                f"plot/t_SNE/rep/{opt.gene}/",
-                f"plot/t_SNE/anc/{opt.gene}/",
+                f"plot/ronb/",
+                f"plot/t_SNE/rep/",
+                f"plot/t_SNE/anc/",
                 f"plot/all_eve_pred/{opt.gene}/"
                 ]
     for check_txt in check_list:

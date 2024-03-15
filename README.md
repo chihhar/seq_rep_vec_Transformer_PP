@@ -110,6 +110,13 @@ third data
 (valid):$ python Main.py -gene=911_3_Address
 ```
 
-
-
+# update plot data and make fig.X
+訓練済みモデルを読み込み、fig.4 ~ fig.8 のplotに必要なデータをpickle化する。(引数は Main.py を参照。)
+```
+$ python plot_code.py [-gene]
+```
+pickle化したデータを参照して、fig.4 ~ fig.8 までの図を作成。
+```
+$ python ronbun_plot_code.py
+```
 # Citation
